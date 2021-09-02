@@ -1,3 +1,5 @@
+# practice
+
 from django.shortcuts import render, redirect
 from .models import Stock 				#, getting from models.py
 from .forms import StockForm			#w/ line 44
