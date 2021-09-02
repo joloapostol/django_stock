@@ -1,0 +1,71 @@
+<!--easily copied what is in base.html//JOLO-->
+{% extends 'base.html' %}
+{% block content %}
+
+
+<h1> Add Stock... </h1>
+<br/>		
+
+      <form action="{% url 'add_stock' %}" class="d-flex" method="POST">
+      	<!-- normally form link, but we use django for url; pertraining to our name=home in urls.py -->
+
+      	<!-- all that been sent in POST,gets sent to home -->
+      		{% csrf_token %}	<!-- anti-hack -->
+
+        <input class="form-control me-2" type="search" placeholder="Add to Portfolio" aria-label="Search" name="ticker">
+        <!-- Ticker = info->home->we reference it via this-->
+        <button class="btn btn-outline-danger" 
+        type="submit">Add Stock</button>
+      </form>
+<br/><br/>
+
+
+<table class="table table-hover table-bordered table-striped">
+  <thead class="table-dark">
+    <tr >
+      <th scope="col">Company Name</th>
+      <th scope="col">Stock Price</th>
+      <th scope="col">Previous Close</th>
+      <th scope="col">Market Cap</th>
+      <th scope="col">YTD Change</th>
+      <th scope="col">52WK High</th>
+      <th scope="col">52WK Low</th>
+    </tr>
+  </thead>
+  <tbody>
+
+{% if ticker %}
+	<!-- line 43 in views.py ; ticker=db--> 
+
+	
+		{% for list_item in output %}
+			<tr>
+				<th scope="row" >{{ list_item.companyName }}</th>
+				<td>${{ list_item.latestPrice }}</td>
+				<td>${{ list_item.previousClose }}</td>
+				<td>${{ list_item.marketCap }}</td>
+				<td>{{ list_item.ytdChange }}%</td>
+				<td>${{ list_item.week52High }}</td>
+				<td>${{ list_item.week52Low }}</td>
+			</tr>
+		{% endfor %}
+     
+	
+
+
+
+  </tbody>
+</table>
+{%  endif %}
+
+
+
+
+<br/><br/>
+
+	{% for item in ticker %}
+		<a href="{% url 'delete' item.id %}" class="btn btn-secondary">Delete {{ item }}</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		{% endfor %}
+
+{% endblock %}

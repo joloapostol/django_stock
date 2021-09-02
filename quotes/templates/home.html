@@ -1,0 +1,47 @@
+<!--easily copied what is in base.html//JOLO-->
+{% extends 'base.html' %}
+{% block content %}
+
+
+{% if ticker %}
+	{{ ticker}}
+{% endif %}
+
+
+<!--shows here the api we got from views.py-->
+{% if api %} <!-- 1 -->	
+	{% if api == "Error..." %} <!-- 2 -->
+		There was a problem with your ticker symbol... 
+		please try again.	   <!-- print -->
+	{% else %}
+
+		<!-- We use this for specifi showing in the site-->
+		<h1>{{ api.companyName }}</h1><br/>
+		Price: ${{ api.latestPrice }}<br/>
+		Previous Close: {{ api.previousClose }}<br/>
+		Market Cap: {{ api.marketCap }}<br/>
+		YTD Change: {{ api.ytdChange }}<br/>
+		52WK High: {{ api.week52High }}<br/>
+		52WK Low: {{ api.week52Low }}<br/>
+
+
+			<!-- We use this for all the data we gather from the api, showing in the site-->
+
+			<!--
+			{% for key, value in api.items %} 	#for loop 
+			{{ key }}: {{ value }}<br/> 		#print 
+			{% endfor %} 						#end for loop 
+			-->
+
+	{% endif %} <!-- 2 -->
+{% endif %} <!-- 1 -->
+
+
+
+
+{% endblock %}
+
+	<!-- 
+	we  do {{ api.companyName }}  to be more specific
+	: the "companyName" came from the info we got from localhost, from api.	
+	--> 
